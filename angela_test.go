@@ -6,7 +6,7 @@ import (
 )
 
 func TestNewTree(t *testing.T) {
-	tr := NewTree(128)
+	tr := NewTree(8192)
 	t.Log(tr.Root.Hash(false))
 	tr.Insert(testItem{"foo"})
 	t.Log(tr.Root.hash)
@@ -14,14 +14,20 @@ func TestNewTree(t *testing.T) {
 		t.Errorf("hash mismatch")
 	}
 	t.Log(tr.Root.Hash(false))
-	var found bool
-	for _, b := range tr.finalBranches {
-		if _, ok := b.items["foo"]; ok {
-			found = true
-		}
+	i, ok := tr.Get("foo")
+	if !ok {
+		t.Errorf("expected ok, got !ok")
 	}
-	if !found {
-		t.Errorf("expected found, got !found")
+	if i.ID() != "foo" {
+		t.Errorf("expected foo, got %s", i.ID())
+	}
+	ok = tr.Delete("foo")
+	if !ok {
+		t.Errorf("expected ok, got !ok")
+	}
+	_, ok = tr.Get("foo")
+	if ok {
+		t.Errorf("expected !ok, got !ok")
 	}
 }
 
