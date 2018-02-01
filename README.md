@@ -1,6 +1,6 @@
 # Angela
 
-[angela merkle tree](https://i.imgur.com/m26QGtS.jpg)
+![angela merkle tree](https://i.imgur.com/m26QGtS.jpg)
 
 raft based distributed merkel tree for model caching
 
